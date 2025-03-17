@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Polarização BJT</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Calculadora de Polarização BJT</h1>
+        <p>Insira os valores para calcular os parâmetros do circuito.</p>
+        
+        <div class="mb-3">
+            <label for="vcc" class="form-label">Tensão de Alimentação (VCC) em Volts:</label>
+            <input type="number" id="vcc" class="form-control" placeholder="Exemplo: 12">
+        </div>
+        
+        <div class="mb-3">
+            <label for="ie" class="form-label">Corrente do Coletor (IE) em mA (sugestão: 2mA):</label>
+            <input type="number" id="ie" class="form-control" placeholder="Exemplo: 2">
+        </div>
+        
+        <button class="btn btn-primary" onclick="calcular()">Calcular</button>
+        
+        <h2 class="mt-4">Resultados:</h2>
+        <ul id="resultados" class="list-group"></ul>
+        
+        <h3 class="mt-4">Metodologia e Fórmulas</h3>
+        <p>Os cálculos seguem o método clássico de polarização estável:</p>
+        <ul>
+            <li>VRE = 0,1 * VCC</li>
+            <li>VRC = 0,4 * VCC</li>
+            <li>VCE = 0,5 * VCC</li>
+            <li>RE = VRE / IE</li>
+            <li>RC = VRC / IE</li>
+            <li>VB = VRE + 0,65V</li>
+            <li>IRB = 0,1 * IE</li>
+            <li>RB1 = (VCC - VB) / IRB</li>
+            <li>RB2 = VB / IRB</li>
+        </ul>
+    </div>
+    
+    <script>
+        function calcular() {
+            let vcc = parseFloat(document.getElementById("vcc").value);
+            let ie = parseFloat(document.getElementById("ie").value) * 1e-3; // Convertendo mA para A
+            
+            if (isNaN(vcc) || vcc <= 0 || isNaN(ie) || ie <= 0) {
+                alert("Por favor, insira valores válidos para VCC e IE.");
+                return;
+            }
+            
+            let vre = 0.1 * vcc;
+            let vrc = 0.4 * vcc;
+            let vce = 0.5 * vcc;
+            let re = vre / ie;
+            let rc = vrc / ie;
+            let vb = vre + 0.65;
+            let irb = 0.1 * ie;
+            let rb1 = (vcc - vb) / irb;
+            let rb2 = vb / irb;
+            
+            let resultados = `
+                <li class='list-group-item'>VRE = ${vre.toFixed(2)}V</li>
+                <li class='list-group-item'>VRC = ${vrc.toFixed(2)}V</li>
+                <li class='list-group-item'>VCE = ${vce.toFixed(2)}V</li>
+                <li class='list-group-item'>RE = ${re.toFixed(2)}Ω</li>
+                <li class='list-group-item'>RC = ${rc.toFixed(2)}Ω</li>
+                <li class='list-group-item'>VB = ${vb.toFixed(2)}V</li>
+                <li class='list-group-item'>RB1 = ${rb1.toFixed(2)}Ω</li>
+                <li class='list-group-item'>RB2 = ${rb2.toFixed(2)}Ω</li>
+            `;
+            document.getElementById("resultados").innerHTML = resultados;
+        }
+    </script>
+</body>
+</html>
