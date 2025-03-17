@@ -2,6 +2,8 @@
 
 Esta é uma calculadora online para determinar os parâmetros de polarização de um transistor BJT NPN em configuração de emissor comum. O usuário pode inserir a tensão de alimentação (VCC) e a corrente do coletor (IE), e a ferramenta calculará os valores de resistências e tensões do circuito.
 
+https://profedney.github.io/bjtcalculator/
+
 ## Tecnologias Utilizadas
 - HTML
 - CSS (Bootstrap)
